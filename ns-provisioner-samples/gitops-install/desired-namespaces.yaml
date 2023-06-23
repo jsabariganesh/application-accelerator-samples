@@ -6,15 +6,15 @@ namespaces:
 
 #@ for j in range(1,234):
 #@ ns = "where-for-dinner-small-" + str(j)
-- item: #@ ns
+- name: #@ ns
 #@ end
 
 #@ for j in range(1,84):
 #@ ns = "where-for-dinner-medium-" + str(j)
-- item: #@ ns
+- name: #@ ns
 #@ end
 
 #@ for j in range(1,18):
 #@ ns = "where-for-dinner-large-" + str(j)
-- item: #@ ns
+- name: #@ ns
 #@ end
