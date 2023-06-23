@@ -5,13 +5,16 @@ namespaces:
 #! for a namespace will be available under data.values for templating additional sources
 
 #@ for j in range(1,234):
-- name: where-for-dinner-small-#@ j
+#@ ns = "where-for-dinner-small-" + str(j)
+- item: #@ ns
 #@ end
 
 #@ for j in range(1,84):
-- name: where-for-dinner-medium-#@ j
+#@ ns = "where-for-dinner-medium-" + str(j)
+- item: #@ ns
 #@ end
 
 #@ for j in range(1,18):
-- name: where-for-dinner-large-#@ j
+#@ ns = "where-for-dinner-large-" + str(j)
+- item: #@ ns
 #@ end
