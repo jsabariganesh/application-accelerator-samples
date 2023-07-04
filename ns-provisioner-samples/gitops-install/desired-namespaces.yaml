@@ -1,9 +1,9 @@
 #@data/values
 
 #@ def get_ns():
-#@     small = [{"item": "where-for-dinner-small-" + str(i)} for i in range(1, 234)]
-#@     medium = [{"item": "where-for-dinner-medium-" + str(i)} for i in range(1, 84)]
-#@     large = [{"item": "where-for-dinner-large-" + str(i)} for i in range(1, 18)]
+#@     small = [{"name": "where-for-dinner-small-" + str(i)} for i in range(1, 234)]
+#@     medium = [{"name": "where-for-dinner-medium-" + str(i)} for i in range(1, 84)]
+#@     large = [{"name": "where-for-dinner-large-" + str(i)} for i in range(1, 18)]
 #@
 #@     return small + medium + large
 #@ end
