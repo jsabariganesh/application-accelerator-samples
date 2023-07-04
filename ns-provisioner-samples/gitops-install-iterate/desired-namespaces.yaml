@@ -1,7 +1,7 @@
 #@data/values
 
 #@ def get_ns():
-#@     small = [{"item": "where-for-dinner-small-" + str(i)} for i in range(1, 301)]
+#@     small = [{"name": "where-for-dinner-small-" + str(i)} for i in range(1, 301)]
 #@     return small
 #@ end
 
