@@ -1,5 +1,5 @@
 #@data/values
 ​
 ---
-namespaces: #@ small = [{"item": "where-for-dinner-small-" + str(i)} for i in range(1, 300)]
+namespaces: #@ [{"name": "where-for-dinner-small-" + str(i)} for i in range(1, 301)]
 
