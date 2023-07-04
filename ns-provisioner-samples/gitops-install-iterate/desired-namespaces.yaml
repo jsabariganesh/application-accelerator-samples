@@ -1,5 +1,3 @@
 #@data/values
-​
 ---
 namespaces: #@ [{"name": "where-for-dinner-small-" + str(i)} for i in range(1, 301)]
-
