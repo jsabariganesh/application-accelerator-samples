@@ -1,0 +1,54 @@
+#! This file contains a Grype Scan policy which blocks the supply chain if your workload has Critical, High or UnknownSeverity CVEs
+#! in your source code or image.
+#@ load("@ytt:data", "data")
+#@ def in_list(key, list):
+#@  return hasattr(data.values.tap_values, key) and (data.values.tap_values[key] in list)
+#@ end
+#! This if condition ensures that this scan policy is only created if the supply chain is testing_scanning and the TAP profile used is full or build.
+#@ if/end in_list('supply_chain', ['testing_scanning']) and in_list('profile', ['full', 'build']):
+---
+apiVersion: app-scanning.apps.tanzu.vmware.com/v1alpha1
+kind: RecurringImageVulnerabilityScan
+metadata:
+  name: grype-recurring-scan
+spec:
+  images:
+    createdWithinDays: 10
+    ranWithinDays: 0
+  retentionPolicy:
+    maxFailedScans: 1
+    maxSuccessfulScans: 1
+  schedule:
+    cron: "*/30 * * * *"
+    startingDeadline: 60m
+  scan:
+    workspace:
+      size: 10Gi
+    scanResults:
+      location: tapscale.azurecr.io/recurring-scan/build/scan-results
+    steps:
+      - name: update-db
+        image: anchore/grype:latest
+        command: [/grype]
+        args:
+          - db
+          - update
+        env:
+          - name: GRYPE_DB_CACHE_DIR
+            value: /workspace/grype-cache
+      - name: grype-scan
+        image: anchore/grype:latest
+        command: [/grype]
+        args:
+          - "{image}"
+          - "-o"
+          - "cyclonedx-json"
+          - "--file"
+          - "{output}"
+        env:
+          - name: GRYPE_DB_AUTO_UPDATE
+            value: "false"
+          - name: GRYPE_CHECK_FOR_APP_UPDATE
+            value: "false"
+          - name: GRYPE_DB_CACHE_DIR
+            value: /workspace/grype-cache
