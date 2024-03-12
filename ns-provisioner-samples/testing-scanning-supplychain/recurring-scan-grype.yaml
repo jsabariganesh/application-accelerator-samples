@@ -19,7 +19,7 @@ spec:
     maxFailedScans: 1
     maxSuccessfulScans: 1
   schedule:
-    cron: "*/30 * * * *"
+    cron: "0 3 * * *"
     startingDeadline: 60m
   scan:
     workspace:
