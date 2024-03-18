@@ -19,7 +19,7 @@ spec:
     maxFailedScans: 1
     maxSuccessfulScans: 1
   schedule:
-    cron: "0 3 * * *"
+    cron: "*/30 * * * *"
     startingDeadline: 60m
   scan:
     workspace:
@@ -27,33 +27,33 @@ spec:
     scanResults:
       location: vipal.azurecr.io/recurring-scan/build/scan-results # add location to store scan results
     steps:
-      - name: update-db
-        image: aquasec/trivy:0.48.3
-        command: [/usr/local/bin/trivy]
-        args:
-          - image
-          - --download-db-only
-          - --no-progress
-          - --cache-dir=/workspace/trivy-cache
-      - name: update-java-db
-        image: aquasec/trivy:0.48.3
-        command: [/usr/local/bin/trivy]
-        args:
-          - image
-          - --download-java-db-only
-          - --no-progress
-          - --cache-dir=/workspace/trivy-cache
-      - name: trivy-generate-report
-        image: aquasec/trivy:0.48.3
-        command: [/usr/local/bin/trivy]
-        args:
-          - image
-          - '{image}'
-          - --exit-code=0
-          - --no-progress
-          - --scanners=vuln
-          - --format=cyclonedx
-          - --output={output}
-          - --cache-dir=/workspace/trivy-cache
-          - --skip-db-update
-          - --skip-java-db-update
+    - name: update-db
+      image: aquasec/trivy:0.48.3
+      command: [/usr/local/bin/trivy]
+      args:
+        - image
+        - --download-db-only
+        - --no-progress
+        - --cache-dir=/workspace/trivy-cache
+    - name: update-java-db
+      image: aquasec/trivy:0.48.3
+      command: [/usr/local/bin/trivy]
+      args:
+        - image
+        - --download-java-db-only
+        - --no-progress
+        - --cache-dir=/workspace/trivy-cache
+    - name: trivy-generate-report
+      image: aquasec/trivy:0.48.3
+      command: [/usr/local/bin/trivy]
+      args:
+        - image
+        - '{image}'
+        - --exit-code=0
+        - --no-progress
+        - --scanners=vuln
+        - --format=cyclonedx
+        - --output={output}
+        - --cache-dir=/workspace/trivy-cache
+        - --skip-db-update
+        - --skip-java-db-update
