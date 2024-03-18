@@ -1,11 +1,11 @@
 #! This file contains a Grype Scan policy which blocks the supply chain if your workload has Critical, High or UnknownSeverity CVEs
 #! in your source code or image.
 #@ load("@ytt:data", "data")
-#@ def in_list(key, list):
-#@  return hasattr(data.values.tap_values, key) and (data.values.tap_values[key] in list)
+#@ def in_list(k1, k2, list):
+#@  return hasattr(data.values.tap_values, k1) and (data.values.tap_values[k1] in list) and (data.values.tap_values[k1][k2] in list)
 #@ end
 #! This if condition ensures that this scan policy is only created if the supply chain is testing_scanning and the TAP profile used is full or build.
-#@ if/end in_list('supply_chain', ['testing_scanning']) and in_list('profile', ['full', 'build']):
+#@ if/end in_list('ootb_supply_chain_testing_scanning', 'image_scanner_template_name', ['image_scanner_template_name', 'image-vulnerability-scan-grype']):
 ---
 apiVersion: app-scanning.apps.tanzu.vmware.com/v1alpha1
 kind: RecurringImageVulnerabilityScan
@@ -25,7 +25,7 @@ spec:
     workspace:
       size: 10Gi
     scanResults:
-      location: tapscale.azurecr.io/recurring-scan/build/scan-results
+      location: vipal.azurecr.io/recurring-scan/build/scan-results
     steps:
       - name: update-db
         image: anchore/grype:latest
